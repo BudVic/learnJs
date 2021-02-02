@@ -31,23 +31,22 @@ const adv = document.querySelectorAll('.promo__adv img'),
   film_list = document.querySelector('.promo__interactive-list');
 bg.style.background = 'url("img/bg.jpg") center center/cover no-repeat';
 genre.textContent = 'ДРАМА';
-adv.forEach(function(item) {
+adv.forEach(function (item) {
   item.remove();
 });
 
 const submit_button = document.querySelector('button');
 const input = document.querySelector('.adding__input');
 const checkbox = document.querySelector('input[type=checkbox]');
-const refactorButtons = function() {
+const refactorButtons = function () {
   const deleteButtons = film_list.querySelectorAll('.delete');
   deleteButtons.forEach((button, i) => {
-    button.addEventListener('click', function(event) {
+    button.addEventListener('click', function (event) {
       removeButton(i);
     });
   });
 }
-const refactorList = function() {
-
+const refactorList = function () {
   old_film_list.innerHTML = "";
   movieDB.movies.sort();
   movieDB.movies.forEach((film, i) => {
@@ -66,18 +65,17 @@ const refactorList = function() {
 
 refactorList();
 
-const newFilm = function(value) {
+const newFilm = function (value) {
   movieDB.movies.push(value);
   input.value = "";
   refactorList();
 }
-const removeButton = function(id) {
+const removeButton = function (id) {
   movieDB.movies.splice(id, 1);
-  console.log(movieDB.movies);
   refactorList();
 }
 
-submit_button.addEventListener('click', function(event) {
+submit_button.addEventListener('click', function (event) {
   event.preventDefault();
   if (checkbox.checked) {
     console.log("Добавляем любимый фильм");
