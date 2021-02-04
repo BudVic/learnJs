@@ -10,6 +10,7 @@ const movieDB = {
   ]
 };
 
+
 const adv = document.querySelectorAll('.promo__adv img'),
   bg = document.querySelector('.promo__bg'),
   genre = bg.querySelector('.promo__genre'),
