@@ -22,4 +22,4 @@ for (let i = 0; i < 1000000; i++) {
 let end = new Date();
 
 alert(`${end - start} ms`);
-console.log(num); 
+console.log(num);
