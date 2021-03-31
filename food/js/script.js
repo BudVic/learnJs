@@ -41,14 +41,14 @@ tabsParent.addEventListener('click', function(event) {
   
   // Timer
 
-  const deadline = '2021-05-11';
+  const deadline = '2020-05-11';
 
   function getTimeRemaining(endtime) {
       const t = Date.parse(endtime) - Date.parse(new Date()),
-          days = t < 0 ? 0 : Math.floor( (t/(1000*60*60*24)) ),
-          seconds = t < 0 ? 0 : Math.floor( (t/1000) % 60 ),
-          minutes = t < 0 ? 0 : Math.floor( (t/1000/60) % 60 ),
-          hours = t < 0 ? 0 : Math.floor( (t/(1000*60*60) % 24) );
+          days = Math.floor( (t/(1000*60*60*24)) ),
+          seconds = Math.floor( (t/1000) % 60 ),
+          minutes = Math.floor( (t/1000/60) % 60 ),
+          hours = Math.floor( (t/(1000*60*60) % 24) );
 
       return {
           'total': t,
@@ -219,10 +219,21 @@ tabsParent.addEventListener('click', function(event) {
   };
 
   forms.forEach(item => {
-      postData(item);
+    bindPostData(item);
   });
 
-  function postData(form) {
+  const postData = async (url, data) => {
+      const res = await fetch(url, {
+          method: "POST",
+          headers: {
+              'Content-type': 'aplication/json'
+          },
+          body: data
+      });
+
+      return await res.json();
+  };
+  function bindPostData(form) {
       form.addEventListener('submit', (e) => {
           e.preventDefault();
 
@@ -234,28 +245,19 @@ tabsParent.addEventListener('click', function(event) {
           `;
           form.insertAdjacentElement('afterend', statusMessage);
       
-          const request = new XMLHttpRequest();
-          request.open('POST', 'server.php');
-          request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
           const formData = new FormData(form);
 
-          const object = {};
-          formData.forEach(function(value, key){
-              object[key] = value;
-          });
-          const json = JSON.stringify(object);
-
-          request.send(json);
-
-          request.addEventListener('load', () => {
-              if (request.status === 200) {
-                  console.log(request.response);
-                  showThanksModal(message.success);
-                  statusMessage.remove();
-                  form.reset();
-              } else {
-                  showThanksModal(message.failure);
-              }
+          const json = JSON.stringify(Object.fromEntries(formData.entries()));
+          console.log(json);
+          postData('http://localhost:3000/requests', json)
+          .then(data => {
+              console.log(data);
+              showThanksModal(message.success);
+              statusMessage.remove();
+          }).catch(() => {
+              showThanksModal(message.failure);
+          }).finally(() => {
+              form.reset();
           });
       });
   }

@@ -1,0 +1,22 @@
+{
+  "name": "test.loc",
+  "version": "1.0.0",
+  "description": "test.loc",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BudVic/learnJs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BudVic/learnJs/issues"
+  },
+  "homepage": "https://github.com/BudVic/learnJs#readme",
+  "devDependencies": {
+    "json-server": "^0.16.3"
+  }
+}
