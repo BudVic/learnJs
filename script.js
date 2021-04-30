@@ -1,25 +1,42 @@
-const btn = document.querySelector('.btn');
-function myAnimation() {
-  const element = document.querySelector('.box');
-  let pos = 0;
-  const id = setInterval(frame, 10);
-  function frame() {
-    if (pos === 300) {
-      clearInterval();
-    } else {
-      pos++;
-      element.style.top = pos + 'px';
-      element.style.left = pos + 'px';
-    }
-  }
-}
-btn.addEventListener('click', myAnimation);
-let num = [];
-let start = new Date();
-for (let i = 0; i < 1000000; i++) {
-  num[i] = i ** 3;
-}
-let end = new Date();
+const btn = document.querySelector(".btn"),
+	elem = document.querySelector(".box");
+let pos = 0;
 
-alert(`${end - start} ms`);
-console.log(num);
+// function myAnimation() {
+//     let pos = 0;
+
+//     const id = setInterval(frame, 10);
+//     function frame() {
+//         if (pos == 300) {
+//             clearInterval(id);
+//         } else {
+//             pos++;
+//             elem.style.top = pos + "px";
+//             elem.style.left = pos + 'px';
+//         }
+//     }
+// }
+function myAnimation() {
+	if (pos < 300) {
+		pos++;
+		changePos(pos);
+		requestAnimationFrame(myAnimation);
+		// btn.setAttribute('disabled', 'disabled');
+	} else if (pos === 300) {
+		pos = 0;
+		// btn.removeAttribute('disabled');
+	}
+}
+
+function changePos(pos) {
+	elem.style.top = pos + "px";
+	elem.style.left = pos + "px";
+}
+
+
+btn.addEventListener("click", () => {
+	console.log(pos);
+	if (pos === 0) {
+		requestAnimationFrame(myAnimation);
+	}
+});
